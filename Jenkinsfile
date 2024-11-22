@@ -28,7 +28,7 @@ pipeline {
                     sh 'docker build -t backend .'
                 }
             }
-        }
+        }}
 
         stage('Run Docker Compose') {
             steps {
