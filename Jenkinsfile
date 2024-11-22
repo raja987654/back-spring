@@ -56,8 +56,8 @@ pipeline {
                         bat 'mvn clean install'  // Build the root project if pom.xml exists
                         // Prepare Docker build context if root pom.xml exists
                         bat 'mkdir -p docker-build-context'
-                        bat 'cp target/*.jar docker-build-context/app.jar'
-                        bat 'cp Dockerfile docker-build-context/'  // Ensure Dockerfile is in context
+                               bat 'copy target\\*.jar docker-build-context\\app.jar'
+                          bat 'copy Dockerfile docker-build-context\\'
                         dir('docker-build-context') {
                             bat 'docker build -t backend .'  // Build Docker image from context
                         }
