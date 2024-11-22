@@ -1,30 +1,29 @@
-version: '3.8'  # Specify the version of Docker Compose you want to use
+version: '3.8'
 
 services:
   spring-boot-app:
-    image: backend  # This references the Docker image built for the Spring Boot app
+    image: backend
     ports:
-      - "0.0.0.0:8091:8091"  # Expose port 8091 for the Spring Boot app
+      - "0.0.0.0:8091:8091"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/api_etudiant  # Connect to MySQL container
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/api_etudiant
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Hibernate auto-update schema (e.g., during development)
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
-      - mysql  # Ensure MySQL is started before the Spring Boot app
+      - mysql
 
   mysql:
-    image: mysql:5.7  # Use MySQL 5.7 image
-    restart: always  # Restart the container if it stops unexpectedly
+    image: mysql:5.7
+    restart: always
     environment:
-      MYSQL_DATABASE: api_etudiant  # Database name to be created
-      MYSQL_ROOT_USERNAME: root  # Root username for MySQL
-      MYSQL_ROOT_PASSWORD: root  # Root password for MySQL
+      MYSQL_DATABASE: api_etudiant
+      MYSQL_ROOT_PASSWORD: root
     ports:
-      - "0.0.0.0:3306:3306"  # Expose MySQL port 3306 for external access
+      - "0.0.0.0:3306:3306"
     volumes:
-      - api_etudiant:/var/lib/mysql  # Persistent storage for MySQL database
+      - api_etudiant:/var/lib/mysql
 
 volumes:
-  api_etudiant:  # Define a named volume for persistent MySQL storage
+  api_etudiant:
