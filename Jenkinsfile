@@ -58,6 +58,7 @@ pipeline {
                         bat 'mkdir -p docker-build-context'
                                bat 'copy target\\*.jar docker-build-context\\app.jar'
                           bat 'copy Dockerfile docker-build-context\\'
+                          bat '"C:\\Program Files\\Docker\\Docker\\Resources\\bin\\docker.exe" build -t backend .
                         dir('docker-build-context') {
                             bat 'docker build -t backend .'  // Build Docker image from context
                         }
