@@ -39,29 +39,23 @@ pipeline {
             }
         }
         
-        stage('Generate Backend Docker Image') {
-            steps {
-                script {
-                    if (fileExists('backend/pom.xml')) {
-                        dir('backend') {
-                            bat 'mvn clean install'
-                            bat '"C:\\Program Files\\Docker\\Docker\\Resources\\bin\\docker.exe" build -t backend .'
-                        }
-                    } else if (fileExists('pom.xml')) {
-                        bat 'mvn clean install'
-                        bat 'mkdir docker-build-context'
-                        bat 'copy target\\*.jar docker-build-context\\app.jar'
-                        bat 'copy Dockerfile docker-build-context\\'
-                        dir('docker-build-context') {
-                            bat '"C:\\Program Files\\Docker\\Docker\\Resources\\bin\\docker.exe" build -t backend .'
-                        }
-                    } else {
-                        error 'No pom.xml found in either root or backend directory'
-                    }
+       stage('Generate Backend Docker Image') {
+    steps {
+        script {
+            if (fileExists('pom.xml')) {
+                bat 'mvn clean install'
+                bat 'mkdir docker-build-context'
+                bat 'copy target\\*.jar docker-build-context\\app.jar'
+                bat 'copy Dockerfile docker-build-context\\'
+                dir('docker-build-context') {
+                    bat '"C:\\Program Files\\Docker\\Docker\\Resources\\bin\\docker.exe" build -t backend .'
                 }
+            } else {
+                error 'No pom.xml found'
             }
         }
-        
+    }
+}
         stage('Run Docker Compose') {
             steps {
                 script {
