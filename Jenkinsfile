@@ -1,5 +1,7 @@
 pipeline {
     agent any
+    pipeline {
+    agent any
     
     tools {
         maven 'maven'
@@ -14,7 +16,8 @@ pipeline {
         
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/raja987654/back-spring'
+                git branch: 'main',
+                    url: 'https://github.com/raja987654/back-spring'
             }
         }
         
@@ -28,6 +31,14 @@ pipeline {
         }
         
         stage('Run Docker Compose') {
+            steps {
+                dir('backend') {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+    }
+}pose') {
             steps {
                 dir('backend') {
                     sh 'docker-compose up -d'
