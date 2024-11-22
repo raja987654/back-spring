@@ -24,8 +24,9 @@ pipeline {
         stage('Generate Backend Docker Image') {
             steps {
                 dir('backend') {
-                    sh 'mvn clean install'
-                    sh 'docker build -t backend .'
+                    // Using bat instead of sh for Windows
+                    bat 'mvn clean install'
+                    bat 'docker build -t backend .'
                 }
             }
         }
@@ -33,12 +34,13 @@ pipeline {
         stage('Run Docker Compose') {
             steps {
                 dir('backend') {
-                    sh 'docker-compose up -d'
+                    // Using bat instead of sh for Windows
+                    bat 'docker-compose up -d'
                 }
             }
         }
     }
-
+    
     post {
         failure {
             echo 'Pipeline failed! Check the logs for details.'
